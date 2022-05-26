@@ -4,6 +4,7 @@ const playAgainBtn = document.getElementById('play-button');
 const popup = document.getElementById('popup-container');
 const notification = document.getElementById('notification-container');
 const finalMessage = document.getElementById('final-message');
+const resetBtn = document.getElementById('reset-button');
 
 const figureParts= document.querySelectorAll(".figure-part");
 
@@ -59,8 +60,9 @@ function updateWrongLetterE1(){
 
     //Check if lost
     if(wrongLetters.length === figureParts.length){
-        finalMessage.innerText = 'Unfortunately you lost. 😕';
+        finalMessage.innerText = 'You lost :(';
         popup.style.display = 'flex';
+        disableKeypress();
     }
 }
 
@@ -73,8 +75,7 @@ function showNotification(){
     }, 2000);
 }
 
-//Keydown letter press
-window.addEventListener('keydown', e =>{
+let processKeypress = e =>{
     if(e.keyCode >= 65 && e.keyCode <=90){
         const letter = e.key;
 
@@ -96,10 +97,19 @@ window.addEventListener('keydown', e =>{
             }
         }
     }
-});
+};
 
-//Restart game and play again
-playAgainBtn.addEventListener('click', () => {
+//Keydown letter press
+function enableKeypress() {
+    window.addEventListener('keydown', processKeypress);
+}
+
+function disableKeypress() {
+    window.removeEventListener('keydown', processKeypress);
+}
+
+let clearGame = () => {
+    enableKeypress();
     //Empty arrays
     correctLetters.splice(0);
     wrongLetters.splice(0);
@@ -111,6 +121,11 @@ playAgainBtn.addEventListener('click', () => {
     updateWrongLetterE1();
 
     popup.style.display = 'none';
-});
+};
+
+//Restart game and play again
+enableKeypress();
+playAgainBtn.addEventListener('click', clearGame);
+resetBtn.addEventListener('click', clearGame);
 
 displayWord();
