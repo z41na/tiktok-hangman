@@ -8,7 +8,7 @@ const resetBtn = document.getElementById('reset-button');
 
 const figureParts= document.querySelectorAll(".figure-part");
 
-const words = ['application', 'programming', 'interface', 'wizard'];
+const words = ['magenta', 'indigo', 'turquoise', 'violet','burgundy','peach','beige','amber','cyan','lavendar','mustard','yellow','teal','olive','orange','maroon','aureolin','celadon','glaucous','phlox'];
 
 let selectedWord = words[Math.floor(Math.random() * words.length)];
 
